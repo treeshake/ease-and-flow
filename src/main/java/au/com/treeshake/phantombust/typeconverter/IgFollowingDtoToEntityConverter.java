@@ -1,14 +1,14 @@
-package au.com.treeshake.phantombust.typeconvert;
+package au.com.treeshake.phantombust.typeconverter;
 
 import au.com.treeshake.phantombust.dto.IgFollowingDto;
 import au.com.treeshake.phantombust.entity.IgFollowing;
 import au.com.treeshake.phantombust.repository.IgFollowingRepository;
+import au.com.treeshake.phantombust.util.DateUtil;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Component
 public class IgFollowingDtoToEntityConverter implements Converter<IgFollowingDto, IgFollowing> {
@@ -23,7 +23,7 @@ public class IgFollowingDtoToEntityConverter implements Converter<IgFollowingDto
     public IgFollowing convert(@NotNull IgFollowingDto source) {
         IgFollowing igFollowing = repository.findOneByQueryAndUsername(source.getQuery(), source.getUsername()).orElse(new IgFollowing());
         igFollowing.setQuery(source.getQuery());
-        igFollowing.setTimestamp(ZonedDateTime.parse(source.getTimestamp(), DateTimeFormatter.ISO_INSTANT));
+        igFollowing.setTimestamp(ZonedDateTime.parse(source.getTimestamp(), DateUtil.ISO_INSTANT_MILLISECOND));
         igFollowing.setError(source.getError());
         igFollowing.setProfileUrl(source.getProfileUrl());
         igFollowing.setUsername(source.getUsername());

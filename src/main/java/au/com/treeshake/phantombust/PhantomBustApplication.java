@@ -4,6 +4,7 @@ import au.com.treeshake.phantombust.service.csv.IgFollowingCsvProcessor;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,5 +35,21 @@ public class PhantomBustApplication {
         jsonMapper.registerModule(new JavaTimeModule());
         jsonMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         return jsonMapper;
+    }
+
+    @Bean(name = "igFollowingCsvSchema")
+    public CsvSchema igFollowingCsvSchema() {
+        return CsvSchema.builder()
+                .addColumn("query")
+                .addColumn("timestamp")
+                .addColumn("error")
+                .addColumn("profileUrl")
+                .addColumn("username")
+                .addColumn("fullName")
+                .addColumn("imgUrl")
+                .addColumn("id")
+                .addColumn("isPrivate")
+                .addColumn("isVerified")
+                .build();
     }
 }
