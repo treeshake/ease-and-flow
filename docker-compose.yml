@@ -1,0 +1,59 @@
+services:
+  phantombust:
+    container_name: phantombust
+    image: phantombust:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    environment:
+      - SPRING_PROFILE=${SPRING_PROFILE:-local}
+      - JAVA_OPTS=${JAVA_OPTS}
+    ports:
+      - "8510:8510"
+    networks:
+      - phantombust-backend
+  db:
+    container_name: db
+    image: postgres:14-alpine
+    restart: always
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      timeout: 45s
+      interval: 10s
+      retries: 10
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - APP_DB_USER=phantombust
+      - APP_DB_PASS=phantombust
+      - APP_DB_NAME=phantombust
+    ports:
+      - '5432:5432'
+    networks:
+      - phantombust-backend
+    volumes:
+      - pg-volume:/var/lib/postgresql/data
+      - ./etc/postgres/pg_hba.conf:/etc/pg_hba.conf
+      - ./db:/docker-entrypoint-initdb.d/
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: phantombust@treeshake.com.au
+      PGADMIN_DEFAULT_PASSWORD: admin
+    networks:
+      - phantombust-backend
+    volumes:
+      - pgadmin-volume:/var/data/pgadmin
+networks:
+  phantombust-backend:
+    name: phantombust-backend
+    driver: bridge
+volumes:
+  pg-volume:
+    name: pg-volume
+  pgadmin-volume:
+    name: pgadmin-volume

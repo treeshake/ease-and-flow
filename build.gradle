@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.6.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+}
+
+group 'com.treeshake.phantombust'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+ext {
+    springBootVersion = "2.6.6"
+    springCloudVersion = "3.1.0"
+    lombokVersion = "1.18.22"
+    junitVersion = "5.8.1"
+    junit4Version = "4.13.2"
+    mockitoVersion = "3.5.11"
+    commonsIoVersion = "2.11.0"
+    postgresJdbcVersion = "42.3.4"
+    liquibaseCoreVersion = "4.9.1"
+    jacksonVersion = "2.13.1"
+}
+
+dependencies {
+    /** SpringBoot Dependencies **/
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+
+    /** Postgres JDBC **/
+    implementation "org.postgresql:postgresql:${postgresJdbcVersion}"
+
+    /** Liquibase **/
+    implementation "org.liquibase:liquibase-core:${liquibaseCoreVersion}"
+
+    /** Lombok **/
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    /** Jackson **/
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+
+    /** Commons **/
+    implementation "commons-io:commons-io:${commonsIoVersion}"
+
+    /** Test Dependencies **/
+    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter:${junitVersion}"
+    testImplementation "junit:junit:${junit4Version}"
+}
