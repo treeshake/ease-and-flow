@@ -1,15 +1,16 @@
 package au.com.treeshake.phantombust;
 
+import au.com.treeshake.phantombust.service.csv.DataEntryCsvService;
 import au.com.treeshake.phantombust.service.csv.IgFollowingCsvProcessor;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
 
 @SpringBootApplication
 public class PhantomBustApplication {
@@ -37,19 +38,9 @@ public class PhantomBustApplication {
         return jsonMapper;
     }
 
-    @Bean(name = "igFollowingCsvSchema")
-    public CsvSchema igFollowingCsvSchema() {
-        return CsvSchema.builder()
-                .addColumn("query")
-                .addColumn("timestamp")
-                .addColumn("error")
-                .addColumn("profileUrl")
-                .addColumn("username")
-                .addColumn("fullName")
-                .addColumn("imgUrl")
-                .addColumn("id")
-                .addColumn("isPrivate")
-                .addColumn("isVerified")
-                .build();
+    @Bean
+    @Scope("prototype")
+    public DataEntryCsvService dataEntryCsvService() {
+        return new DataEntryCsvService();
     }
 }

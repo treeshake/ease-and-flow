@@ -1,20 +1,8 @@
 package au.com.treeshake.phantombust.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Data;
 
-@JsonPropertyOrder({"query",
-        "timestamp",
-        "error",
-        "profileUrl",
-        "username",
-        "fullName",
-        "imgUrl",
-        "id",
-        "isPrivate",
-        "isVerified"
-})
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class IgFollowingDto {
@@ -26,7 +14,7 @@ public class IgFollowingDto {
     private String username;
     private String fullName;
     private String imgUrl;
-    private Long id;
-    private boolean isPrivate;
-    private boolean isVerified;
+    private String id;
+    private String isPrivate;
+    private String isVerified;
 }

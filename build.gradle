@@ -21,6 +21,8 @@ ext {
     postgresJdbcVersion = "42.3.4"
     liquibaseCoreVersion = "4.9.1"
     jacksonVersion = "2.13.1"
+    commonsLang3Version = "3.12.0"
+    commonsCollections4Version = "4.4"
 }
 
 dependencies {
@@ -46,8 +48,10 @@ dependencies {
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
-    /** Commons **/
+    /** Apache Commons **/
     implementation "commons-io:commons-io:${commonsIoVersion}"
+    implementation "org.apache.commons:commons-lang3:${commonsLang3Version}"
+    implementation "org.apache.commons:commons-collections4:${commonsCollections4Version}"
 
     /** Test Dependencies **/
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
