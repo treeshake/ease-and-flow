@@ -13,7 +13,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Objects;
 
 @Slf4j
@@ -29,9 +28,7 @@ public class CsvProcessor<D> {
         this.incomingType = incomingType;
     }
 
-    public <E> void processFile(String classResource, Converter<D,E> converter, JpaRepository<E, Long> repository) throws IOException {
-        URL resource = Objects.requireNonNull(IgFollowingCsvProcessingService.class.getResource(classResource));
-        File file = new File(resource.getFile());
+    public <E> void processFile(File file, Converter<D,E> converter, JpaRepository<E, Long> repository) throws IOException {
         LineIterator lineIterator = FileUtils.lineIterator(file, "UTF-8");
         while (lineIterator.hasNext()) {
             String line = "";

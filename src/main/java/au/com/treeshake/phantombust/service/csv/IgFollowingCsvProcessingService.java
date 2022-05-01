@@ -6,7 +6,10 @@ import au.com.treeshake.phantombust.typeconverter.IgFollowingDtoToEntityConverte
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -23,7 +26,9 @@ public class IgFollowingCsvProcessingService {
     }
 
     public void importFile() throws IOException {
-        csvProcessor.processFile("/data/ig-following/processed/batch-1-2020-04-28.csv", converter, repository);
+        URL resource = Objects.requireNonNull(IgFollowingCsvProcessingService.class.getResource("/data/ig-following/processed/batch-1-2020-04-28.csv"));
+        File file = new File(resource.getFile());
+        csvProcessor.processFile(file, converter, repository);
     }
 
 }

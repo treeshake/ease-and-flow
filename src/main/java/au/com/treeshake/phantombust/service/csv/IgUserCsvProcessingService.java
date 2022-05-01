@@ -5,7 +5,10 @@ import au.com.treeshake.phantombust.repository.IgUserRepository;
 import au.com.treeshake.phantombust.typeconverter.IgUserDtoToEntityConverter;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.Objects;
 
 @Service
 public class IgUserCsvProcessingService {
@@ -21,6 +24,8 @@ public class IgUserCsvProcessingService {
     }
 
     public void importFile() throws IOException {
-        csvProcessor.processFile("/data/ig-user/user-list.csv", converter, repository);
+        URL resource = Objects.requireNonNull(IgFollowingCsvProcessingService.class.getResource("/data/ig-user/user-list.csv"));
+        File file = new File(resource.getFile());
+        csvProcessor.processFile(file, converter, repository);
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataEntryCsvService {
 
-    private final List<RawData> dataEntries;
+    private final @Getter List<RawData> dataEntries;
     private @Getter CsvSchema csvSchema;
     private @Getter boolean isHeader;
 
@@ -21,13 +21,15 @@ public class DataEntryCsvService {
     }
 
     public RawData setLine(String line) {
+        int lineNumber;
         if (CollectionUtils.isEmpty(dataEntries)) {
             this.csvSchema = inferSchema(line);
             this.isHeader = true;
+            lineNumber = 1;
         } else {
             this.isHeader = false;
+            lineNumber = dataEntries.size() + 1;
         }
-        int lineNumber = isHeader ? 1 : dataEntries.size();
         RawData rawData = new RawData(lineNumber, line);
         dataEntries.add(rawData);
         return rawData;
