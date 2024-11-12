@@ -4,14 +4,14 @@ spring:
   profiles:
     active: local
 server:
-  port: 1510
+  port: 1511
 ---
 spring:
   config:
     activate:
       on-profile: local
   datasource:
-    url: jdbc:postgresql://localhost:5432/phantombust
+    url: jdbc:postgresql://localhost:5430/phantombust
     username: phantombust
     password: phantombust
   jpa:
@@ -29,11 +29,11 @@ spring:
     drop-first: false
     database-change-log-lock-table: LIQUIBASE_DATABASE_CHANGE_LOG_LOCK
     contexts: create
-phantombust:
-  importUrls:
-    igFollowing:
-      csv: https://cache1.phantombooster.com/1dpJXxCH7AU/Bgs6s6415dSUY8DY3ZSz5g/result.csv 
-      json: https://cache1.phantombooster.com/1dpJXxCH7AU/Bgs6s6415dSUY8DY3ZSz5g/result.json?_=1650854736253
+app:
+  phantombuster:
+    dataImport:
+      followingCollectors:
+        - https://cache1.phantombooster.com/1dpJXxCH7AU/Bgs6s6415dSUY8DY3ZSz5g/result.csv
 logging:
   pattern:
     console: "%d %-5level %logger : %msg%n"

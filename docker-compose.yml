@@ -1,6 +1,6 @@
 services:
-  phantombust:
-    container_name: phantombust
+  phantombust.service:
+    container_name: phantombust_service
     image: phantombust:1
     build:
       context: ./
@@ -11,9 +11,9 @@ services:
     ports:
       - "8510:8510"
     networks:
-      - phantombust-backend
-  db:
-    container_name: db
+      - phantombust_network
+  phantombust.db:
+    container_name: phantombust_db
     image: postgres:14-alpine
     restart: always
     healthcheck:
@@ -28,32 +28,32 @@ services:
       - APP_DB_PASS=phantombust
       - APP_DB_NAME=phantombust
     ports:
-      - '5432:5432'
+      - '5430:5432'
     networks:
-      - phantombust-backend
+      - phantombust_network
     volumes:
-      - pg-volume:/var/lib/postgresql/data
+      - pg_volume:/var/lib/postgresql/data
       - ./etc/postgres/pg_hba.conf:/etc/pg_hba.conf
       - ./db:/docker-entrypoint-initdb.d/
-  pgadmin:
+  phantombust.pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: phantombust_pgadmin
     restart: always
     ports:
-      - "5050:80"
+      - "6161:80"
     environment:
       PGADMIN_DEFAULT_EMAIL: phantombust@treeshake.com.au
       PGADMIN_DEFAULT_PASSWORD: admin
     networks:
-      - phantombust-backend
+      - phantombust_network
     volumes:
-      - pgadmin-volume:/var/data/pgadmin
+      - pgadmin_volume:/var/data/pgadmin
 networks:
-  phantombust-backend:
-    name: phantombust-backend
+  phantombust_network:
+    name: phantombust_network
     driver: bridge
 volumes:
-  pg-volume:
-    name: pg-volume
-  pgadmin-volume:
-    name: pgadmin-volume
+  pg_volume:
+    name: pg_volume
+  pgadmin_volume:
+    name: pgadmin_volume
