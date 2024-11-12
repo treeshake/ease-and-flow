@@ -1,4 +1,4 @@
-package io.mxsix.phantombust.util;
+package au.com.treeshake.phantombust.util;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

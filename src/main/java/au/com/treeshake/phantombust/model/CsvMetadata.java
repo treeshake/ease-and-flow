@@ -1,4 +1,4 @@
-package io.mxsix.phantombust.model;
+package au.com.treeshake.phantombust.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;

@@ -1,7 +1,8 @@
-package io.mxsix.phantombust.model;
+package au.com.treeshake.phantombust.model;
 
+import au.com.treeshake.phantombust.exception.DataEntryIsEmptyException;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.mxsix.phantombust.exception.DataEntryIsEmptyException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.mxsix.phantombust.typeconverter;
+package au.com.treeshake.phantombust.typeconverter;
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.Resource;

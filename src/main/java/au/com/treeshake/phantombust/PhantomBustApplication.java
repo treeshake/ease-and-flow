@@ -5,12 +5,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/**
+ * Main class.
+ */
 @SpringBootApplication
 public class PhantomBustApplication {
 
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext ctx = SpringApplication.run(PhantomBustApplication.class, args);
-//        IgFollowingCsvProcessor bean = ctx.getBean(IgFollowingCsvProcessor.class);
+//        IgFollowingCsvProcessingService bean = ctx.getBean(IgFollowingCsvProcessingService.class);
 //        bean.importFile();
 //        IgUserCsvProcessorService bean = ctx.getBean(IgUserCsvProcessorService.class);
 //        bean.importFile();

@@ -1,14 +1,16 @@
 package au.com.treeshake.phantombust.util;
 
-import lombok.experimental.UtilityClass;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-
 import java.math.BigInteger;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import lombok.experimental.UtilityClass;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
+/**
+ * Utils class.
+ */
 @UtilityClass
 public class FieldUtils {
 

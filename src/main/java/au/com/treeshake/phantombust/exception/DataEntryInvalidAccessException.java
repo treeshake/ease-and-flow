@@ -1,4 +1,4 @@
-package io.mxsix.phantombust.exception;
+package au.com.treeshake.phantombust.exception;
 
 /**
  * Exception class.

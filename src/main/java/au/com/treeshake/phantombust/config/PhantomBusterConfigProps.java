@@ -1,4 +1,4 @@
-package io.mxsix.phantombust.config;
+package au.com.treeshake.phantombust.config;
 
 import java.util.List;
 import javax.validation.constraints.NotEmpty;
