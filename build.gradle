@@ -1,10 +1,66 @@
+buildscript {
+    repositories {
+        maven {
+            url 'https://mxsix.jfrog.io/artifactory/default-maven-local'
+            credentials {
+                username = project.hasProperty('artifactory_user') ? artifactory_user : System.getenv('ARTIFACTORY_USER')
+                password = project.hasProperty('artifactory_password') ? artifactory_password : System.getenv('ARTIFACTORY_PASSWORD')
+            }
+        }
+        mavenCentral()
+    }
+    dependencies {
+        //Check for the latest version here: http://plugins.gradle.org/plugin/com.jfrog.artifactory
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4+"
+    }
+}
+
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'groovy'
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-group 'com.treeshake.phantombust'
+allprojects {
+    apply plugin: 'com.jfrog.artifactory'
+}
+
+group 'io.mxsix'
+version = '0.1.1'
+
+artifactory {
+    contextUrl = 'https://mxsix.jfrog.io/artifactory'
+    publish {
+        repository {
+            repoKey = 'default-maven-local'
+            username = project.hasProperty('artifactory_user') ? artifactory_user : System.getenv('ARTIFACTORY_USER')
+            password = project.hasProperty('artifactory_password') ? artifactory_password : System.getenv('ARTIFACTORY_PASSWORD')
+            maven = true
+        }
+        defaults {
+            publications('mavenJava')
+        }
+        publishArtifacts = true
+    }
+    resolve {
+        repository {
+            repoKey = 'default-maven-local'
+            username = project.hasProperty('artifactory_user') ? artifactory_user : System.getenv('ARTIFACTORY_USER')
+            password = project.hasProperty('artifactory_password') ? artifactory_password : System.getenv('ARTIFACTORY_PASSWORD')
+            maven = true
+        }
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
 
 repositories {
     mavenLocal()

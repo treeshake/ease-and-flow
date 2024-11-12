@@ -22,8 +22,10 @@ logging:
       guru.springframework.controllers: INFO
       org.hibernate: INFO
       liquibase: INFO
-      au.com.treeshake: DEBUG
+      au.com.mxsix: DEBUG
 
 app:
-  properties:
-    devEnvironment: true
+  phantombuster:
+    dataImport:
+      followingCollectors:
+        - https://cache1.phantombooster.com/1dpJXxCH7AU/Bgs6s6415dSUY8DY3ZSz5g/result.csv
