@@ -12,6 +12,12 @@ spring:
     show-sql: true
     generate-ddl: false
     ddl-auto: create-drop
+  liquibase:
+    enabled: false
+    database-change-log-table: LIQUIBASE_DATABASE_CHANGE_LOG
+    drop-first: false
+    database-change-log-lock-table: LIQUIBASE_DATABASE_CHANGE_LOG_LOCK
+    contexts: create
 
 logging:
   pattern:

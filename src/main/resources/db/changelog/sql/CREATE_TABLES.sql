@@ -4,6 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS public.ig_following
 (
+    id serial,
     query character varying(80) COLLATE pg_catalog."default" NOT NULL,
     "timestamp" time with time zone,
     error character varying(255) COLLATE pg_catalog."default",
@@ -14,7 +15,6 @@ CREATE TABLE IF NOT EXISTS public.ig_following
     instagram_id bigint NOT NULL,
     is_private boolean DEFAULT false,
     is_verified boolean DEFAULT false,
-    id bigint NOT NULL DEFAULT nextval('ig_following_id_seq'::regclass),
     CONSTRAINT ig_following_unique UNIQUE (query, username)
 )
 
@@ -38,7 +38,7 @@ CREATE INDEX IF NOT EXISTS ig_following_idx
 
 CREATE TABLE IF NOT EXISTS public.ig_user
 (
-    id integer NOT NULL DEFAULT nextval('ig_user_id_seq'::regclass),
+    id serial,
     username character varying(60) COLLATE pg_catalog."default",
     CONSTRAINT ig_user_pkey PRIMARY KEY (id),
     CONSTRAINT username_unique UNIQUE (username)
@@ -55,7 +55,7 @@ ALTER TABLE IF EXISTS public.ig_user
 
 CREATE TABLE IF NOT EXISTS public.ig_profile
 (
-    id integer NOT NULL DEFAULT nextval('ig_profile_id_seq'::regclass),
+    id serial,
     profile_url character varying(80) COLLATE pg_catalog."default",
     public_email character varying(255) COLLATE pg_catalog."default",
     contact_phone_number character varying(80) COLLATE pg_catalog."default",

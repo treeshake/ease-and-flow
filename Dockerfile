@@ -1,4 +1,4 @@
-FROM openjdk:15-jdk
+FROM openjdk:17-jdk
 COPY ["build/libs/*.jar", "app.jar"]
 EXPOSE 8510
 ENV JAVA_OPTS=""

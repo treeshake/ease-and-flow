@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @ConfigurationProperties(prefix = "phantombust")
 public class PhantomBustConfiguration {
 
-    @NotNull
     private ImportUrls importUrls;
 
     @Validated

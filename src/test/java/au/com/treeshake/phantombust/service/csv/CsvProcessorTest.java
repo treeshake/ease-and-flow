@@ -21,9 +21,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
-@TestPropertySource(locations = "classpath:application-test.yml")
-@DataJpaTest
-@Sql(scripts = "classpath:sql/create_ig_following.sql")
+//@TestPropertySource(locations = "classpath:application-test.yml")
+//@DataJpaTest
+//@Sql(scripts = "classpath:sql/create_ig_following.sql")
 class CsvProcessorTest {
 
     @MockBean

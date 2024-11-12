@@ -12,6 +12,9 @@ services:
       - "8510:8510"
     networks:
       - phantombust_network
+    volumes:
+      - appdata_volume:/data
+      - ./data:/data
   phantombust.db:
     container_name: phantombust_db
     image: postgres:14-alpine
@@ -53,6 +56,8 @@ networks:
     name: phantombust_network
     driver: bridge
 volumes:
+  appdata_volume:
+    name: appdata_volume
   pg_volume:
     name: pg_volume
   pgadmin_volume:
