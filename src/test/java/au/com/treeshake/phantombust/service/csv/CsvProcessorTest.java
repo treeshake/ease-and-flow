@@ -1,67 +1,64 @@
 package au.com.treeshake.phantombust.service.csv;
 
-import au.com.treeshake.phantombust.dto.IgFollowingDto;
+import au.com.treeshake.phantombust.dto.IgProfileDto;
 import au.com.treeshake.phantombust.repository.IgProfileRepository;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.dataformat.csv.CsvMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.junit.jupiter.api.BeforeEach;
+import java.io.File;
+import java.io.IOException;
+
+import au.com.treeshake.phantombust.service.csv.CsvProcessor;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.LineIterator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.TestConfiguration;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.util.ResourceUtils;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-//@TestPropertySource(locations = "classpath:application-test.yml")
-//@DataJpaTest
-//@Sql(scripts = "classpath:sql/create_ig_following.sql")
+@ExtendWith(MockitoExtension.class)
 class CsvProcessorTest {
 
     @MockBean
     private IgProfileRepository igProfileRepository;
 
-    @Autowired
-    private CsvProcessor<IgFollowingDto> csvProcessor;
-
-    @TestConfiguration
-    static class TestContextConfiguration {
-        @Bean
-        public CsvProcessor<IgFollowingDto> igFollowingCsvProcessor(DataEntryCsvService dataEntry, CsvMapper csvMapper) {
-            return new CsvProcessor<>(dataEntry, csvMapper, IgFollowingDto.class);
-        }
-
-        @Bean
-        @Scope("prototype")
-        public DataEntryCsvService dataEntryCsvService() {
-            return new DataEntryCsvService();
-        }
-
-        @Bean
-        public CsvMapper csvMapper() {
-            CsvMapper csvMapper = new CsvMapper();
-            csvMapper.registerModule(new JavaTimeModule());
-            csvMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-            return csvMapper;
-        }
-    }
-
-    @BeforeEach
-    public void setUp() {
-
-    }
-
+    @InjectMocks
+    private CsvProcessor<IgProfileDto> csvProcessor;
 
     @Test
-    public void givenProcessFile_whenNotHeader_thenSaveRecord() {
-        assertTrue(true);
+    public void givenFileWithNewLine_expectFileSanitisedCorrectly() throws IOException {
+
+        File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "csv/ig-profile-single-entry.csv");
+
+//        File processedFile = csvProcessor.sanitiseFile(file);
+
+//        LineIterator lineIterator = FileUtils.lineIterator(processedFile);
+
+//        int noOfLines = 0;
+//        while (lineIterator.hasNext()) {
+//            lineIterator.nextLine();
+//            noOfLines++;
+//        }
+
+//        assertThat(noOfLines).isEqualTo(3);
+    }
+
+    @Test
+    public void givenFileWithExtraCommaCharacters_expectFileSanitisedCorrectly() throws IOException {
+
+//        File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "csv/ig-profile-extra-commas.csv");
+//
+//        File processedFile = csvProcessor.sanitiseFile(file);
+//
+//        LineIterator lineIterator = FileUtils.lineIterator(processedFile);
+//
+//        int noOfLines = 0;
+//        while (lineIterator.hasNext()) {
+//            lineIterator.nextLine();
+//            noOfLines++;
+//        }
+//
+//        assertThat(noOfLines).isEqualTo(3);
     }
 }

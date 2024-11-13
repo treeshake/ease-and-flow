@@ -3,12 +3,15 @@ package au.com.treeshake.phantombust.typeconverter;
 import au.com.treeshake.phantombust.dto.IgFollowingDto;
 import au.com.treeshake.phantombust.entity.IgFollowing;
 import au.com.treeshake.phantombust.util.FieldUtils;
+
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-
+/**
+ * Converter class.
+ */
 @Component
 public class IgFollowingDtoToEntityConverter implements Converter<IgFollowingDto, IgFollowing> {
 

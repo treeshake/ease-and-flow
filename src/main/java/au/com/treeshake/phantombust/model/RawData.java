@@ -1,29 +1,40 @@
 package au.com.treeshake.phantombust.model;
 
-import lombok.Data;
-
 import java.util.Objects;
+import lombok.Data;
+import lombok.Getter;
 
+/**
+ * Model class.
+ */
 @Data
 public class RawData {
 
-    private final int lineNumber;
-    private final String data;
+    private final @Getter int lineNumber;
+    private final @Getter String data;
     private Exception error;
+    private boolean skipped;
 
     public RawData(int lineNumber, String data) {
         this.lineNumber = lineNumber;
         this.data = data;
     }
 
-    public RawData(int lineNumber, String data, Exception error) {
-        this.lineNumber = lineNumber;
-        this.data = data;
-        this.error = error;
-    }
-
     public boolean hasError() {
         return error != null;
+    }
+
+    public boolean hasSkipped() {
+        return skipped;
+    }
+
+    public void markAsSkipped() {
+        skipped = true;
+    }
+
+    public void markAsError(Exception error) {
+        this.error = error;
+        this.skipped = true;
     }
 
     @Override
@@ -34,8 +45,8 @@ public class RawData {
         if (!(other instanceof RawData theOther)) {
             return false;
         }
-        return Objects.equals(theOther.getLineNumber(), this.lineNumber) &&
-               Objects.equals(theOther.getData(), this.getData());
+        return Objects.equals(theOther.getLineNumber(), this.lineNumber)
+            && Objects.equals(theOther.getData(), this.getData());
     }
 
     @Override

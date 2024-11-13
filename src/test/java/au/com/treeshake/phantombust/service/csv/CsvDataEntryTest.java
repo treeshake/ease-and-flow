@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,35 +20,35 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@ExtendWith(SpringExtension.class)
+@ExtendWith(MockitoExtension.class)
 @Disabled
-public class DataEntryCsvServiceTest {
+public class CsvDataEntryTest {
 
-    private CsvDataEntry dataEntry;
+    private CsvDataEntry csvDataEntry;
 
     @BeforeEach
     public void beforeEach() {
-        dataEntry = new CsvDataEntry();
+        csvDataEntry = new CsvDataEntry();
     }
 
     @Test
-    public void givensetEntry_whenHeader_thenProcessLineNumber() {
-        dataEntry.setEntry("a,b,c");
+    public void givenSetLine_whenHeader_thenProcessLineNumber() {
+        csvDataEntry.setEntry("a,b,c");
         assertAll("Verify data entry service - set line",
-                () -> assertThat(dataEntry.getLineNumber(), is(equalTo(1))),
-                () -> assertThat(dataEntry.getCsvSchema(), is(notNullValue()))
+                () -> assertThat(csvDataEntry.getLineNumber(), is(equalTo(1))),
+                () -> assertThat(csvDataEntry.getCsvSchema(), is(notNullValue()))
         );
     }
 
     @Test
     public void givenErrorLine_whenSetError_thenProcessErrorLine() {
-        dataEntry.setEntry("1,2,3"); // Set header first
-        dataEntry.setEntry("d,e,f");
-        dataEntry.getCurrentLine().markAsError(new RuntimeException());
+        csvDataEntry.setEntry("1,2,3"); // Set header first
+        csvDataEntry.setEntry( "d,e,f");
+        csvDataEntry.getCurrentLine().markAsError(new RuntimeException());
         assertAll("Verify data entry service - set error",
-                () -> assertThat(dataEntry.getStatistics().getErrorCount(), is(equalTo(1L))),
-                () -> assertThat(dataEntry.getLineNumber(), is(equalTo(2))),
-                () -> assertThat(dataEntry.getCsvSchema(), is(notNullValue()))
+                () -> assertThat(csvDataEntry.getStatistics().getErrorCount(), is(equalTo(1L))),
+                () -> assertThat(csvDataEntry.getLineNumber(), is(equalTo(2))),
+                () -> assertThat(csvDataEntry.getCsvSchema(), is(notNullValue()))
         );
     }
 
@@ -58,11 +58,11 @@ public class DataEntryCsvServiceTest {
                 new RawData(2, "Line 2"),
                 new RawData(3, "Line 3")
         );
-        dataEntry.setEntry("Line 1");
-        dataEntry.setEntry("Line 2");
-        dataEntry.setEntry("Line 3");
+        csvDataEntry.setEntry("Line 1");
+        csvDataEntry.setEntry("Line 2");
+        csvDataEntry.setEntry("Line 3");
 
-        List<RawData> actual = dataEntry.getDataEntries();
+        List<RawData> actual = csvDataEntry.getDataEntries();
         assertIterableEquals(actual, expected);
     }
 
@@ -72,7 +72,6 @@ public class DataEntryCsvServiceTest {
             throw new RuntimeException("Some message");
         });
         assertThat(thrown.getMessage(), is(equalTo("Some message")));
-        assertSame("Some message", thrown.getMessage());
-
+        assertSame(thrown.getMessage(), "Some message");
     }
 }

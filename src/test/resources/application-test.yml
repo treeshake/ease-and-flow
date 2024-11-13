@@ -12,12 +12,6 @@ spring:
     show-sql: true
     generate-ddl: false
     ddl-auto: create-drop
-  liquibase:
-    enabled: false
-    database-change-log-table: LIQUIBASE_DATABASE_CHANGE_LOG
-    drop-first: false
-    database-change-log-lock-table: LIQUIBASE_DATABASE_CHANGE_LOG_LOCK
-    contexts: create
 
 logging:
   pattern:
@@ -28,8 +22,10 @@ logging:
       guru.springframework.controllers: INFO
       org.hibernate: INFO
       liquibase: INFO
-      au.com.treeshake: DEBUG
+      au.com.mxsix: DEBUG
 
 app:
-  properties:
-    devEnvironment: true
+  phantombuster:
+    dataImport:
+      followingCollectors:
+        - https://cache1.phantombooster.com/1dpJXxCH7AU/Bgs6s6415dSUY8DY3ZSz5g/result.csv

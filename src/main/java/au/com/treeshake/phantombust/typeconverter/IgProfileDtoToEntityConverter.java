@@ -2,26 +2,26 @@ package au.com.treeshake.phantombust.typeconverter;
 
 import au.com.treeshake.phantombust.dto.IgProfileDto;
 import au.com.treeshake.phantombust.entity.IgProfile;
-import au.com.treeshake.phantombust.repository.IgProfileRepository;
 import au.com.treeshake.phantombust.util.FieldUtils;
+import au.com.treeshake.phantombust.repository.IgProfileRepository;
+
+import java.math.BigInteger;
+import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.NotNull;
-
+/**
+ * Converter class.
+ */
 @Component
-public class IgProfileDtoToEntityConverter implements Converter<IgProfileDto, IgProfile> {
-
-    private final IgProfileRepository repository;
-
-    public IgProfileDtoToEntityConverter(IgProfileRepository repository) {
-        this.repository = repository;
-    }
+public record IgProfileDtoToEntityConverter(
+        IgProfileRepository repository) implements Converter<IgProfileDto, IgProfile> {
 
     @Override
     public IgProfile convert(@NotNull IgProfileDto source) {
-        IgProfile igProfile = repository.findOneByProfileName(source.getProfileName()).orElse(new IgProfile());
+        BigInteger instagramId = FieldUtils.parseInstagramId(source.getInstagramID());
+        IgProfile igProfile = repository.findOneByInstagramID(instagramId).orElse(new IgProfile());
         igProfile.setProfileUrl(source.getProfileUrl());
         igProfile.setPublicEmail(source.getPublicEmail());
         igProfile.setContactPhoneNumber(source.getContactPhoneNumber());
@@ -31,7 +31,7 @@ public class IgProfileDtoToEntityConverter implements Converter<IgProfileDto, Ig
         igProfile.setSnapchat(source.getSnapchat());
         igProfile.setFollowersCount(FieldUtils.parseNullableInteger(source.getFollowersCount()));
         igProfile.setFollowingCount(FieldUtils.parseNullableInteger(source.getFollowingCount()));
-        igProfile.setInstagramID(FieldUtils.parseInstagramId(source.getInstagramID()));
+        igProfile.setInstagramID(instagramId);
         igProfile.setBusinessAccount(BooleanUtils.toBoolean(source.getIsBusinessAccount()));
         igProfile.setVerified(BooleanUtils.toBoolean(source.getIsVerified()));
         igProfile.setImageUrl(source.getImageUrl());

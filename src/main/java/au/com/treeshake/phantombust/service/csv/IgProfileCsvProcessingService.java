@@ -1,32 +1,28 @@
 package au.com.treeshake.phantombust.service.csv;
 
-import au.com.treeshake.phantombust.dto.IgProfileDto;
+import au.com.treeshake.phantombust.config.PhantomBusterConfigProps;
 import au.com.treeshake.phantombust.entity.IgProfile;
 import au.com.treeshake.phantombust.model.ProcessingConfig;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Service;
+import au.com.treeshake.phantombust.dto.IgProfileDto;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.Objects;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-@Slf4j
+/**
+ * Service class.
+ */
 @Service
-public class IgProfileCsvProcessingService {
-
-    private final ProcessingConfig<IgProfileDto, IgProfile> processing;
-    private final ResourceLoader resourceLoader;
-
-    public IgProfileCsvProcessingService(ProcessingConfig<IgProfileDto, IgProfile> processing, ResourceLoader resourceLoader) {
-        this.processing = processing;
-        this.resourceLoader = resourceLoader;
-    }
+public record IgProfileCsvProcessingService(PhantomBusterConfigProps configProps,
+                                            ProcessingConfig<IgProfileDto, IgProfile> processing) {
 
     public void importFile() throws IOException {
-        URL resource = Objects.requireNonNull(resourceLoader.getResource("file:/data/instagram-profile-scraper-2022.csv")).getURL();
-        File file = new File(resource.getFile());
-        processing.getCsvProcessor().processFile(file, processing.getConverter(), processing.getRepository());
+        File file = ResourceUtils.getFile("file:/data/instagram-follower-collector-2022-parsed.csv");
+//        URL resource = Objects.requireNonNull(IgFollowingCsvProcessingService.class.getResource("/data/ig-profile/ig-profile-batch-1.csv"));
+//        File file = new File(resource.getFile());
+        processing.csvProcessor().processFile(file, processing.converter(), processing.repository());
+//        @NotEmpty List<Resource> resources = configProps.getDataImport().getFollowingCollectors();
     }
+
 }
